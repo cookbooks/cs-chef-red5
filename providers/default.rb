@@ -40,7 +40,7 @@ action :install do
       end
     end
 
-    unzip_dir_name = Dir.entries(tmpdir).detect{|f|::File.directory?(f)}
+    unzip_dir_name = Dir.entries(tmpdir).detect{|f|::File.directory?(f) and f!= "."  and f!= ".."}
     ::FileUtils.chown new_resource.user, new_resource.group, "#{tmpdir}/#{unzip_dir_name}"
     cmd = Chef::ShellOut.new(
                        %Q[ mv "#{tmpdir}/#{unzip_dir_name}" "#{app_dir}" ]
